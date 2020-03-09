@@ -16,8 +16,6 @@ if(isset($_GET['jogo']) && isset($_GET['nome'])) {
     } else {
         header('Location: criarjogo.php');
     }
-} else {
-    header('Location: criarjogo.php');
 }
 ?>
 <form method="GET">

@@ -1,16 +1,42 @@
 <?php
 
 class Game{
-    private $jogada;
-    private $jogo;
     private $pdo;
 
     public function __construct(){
         $this->pdo = new PDO("mysql:dbname=jogodavelha;host=localhost", "root", "");    
     }
-    public function novaJogada() {
 
-    
+    public function novaJogada($jogo, $numero, $player, $gameOver) {
+        $hora = date('Y-m-d H:i:s');
+
+        $sql = "INSERT INTO jogadas (jogo, numero, player, gameOver, hora) VALUES (:jogo, :numero, :player, :gameOver, :hora)";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->bindValue(":numero", $numero);
+        $sql->bindValue(":player", $player);
+        $sql->bindValue(":gameOver", $gameOver);
+        $sql->bindValue(":hora", $hora);
+        $sql->execute();
+
+        $arr = array('hora' => $hora);
+        return json_encode($arr);
+    }
+
+    public function arrayNovaJogada($jogo, $hora) {
+        $sql = "SELECT * FROM jogadas WHERE jogo = :jogo AND hora > :hora";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->bindValue(":hora", $hora);
+        $sql->execute();
+
+        if($sql -> rowCount() > 0) {
+            $sql = $sql->fetch(PDO::FETCH_ASSOC);
+            $arr = array('number' => $sql['numero'], 'gameOver' => $sql['gameOver']);
+            return $arr;
+        } else {
+            return array();
+        }
     }
 
     public function newGame($player1, $player2){
@@ -28,11 +54,10 @@ class Game{
     }
 
     public function existeJogo($jogo) {
-        $sql = "SELECT * FROM jogo WHERE jogo = :jogo";
+        $sql = "SELECT * FROM jogos WHERE jogo = :jogo";
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":jogo", $jogo);
         $sql->execute();
-
         if($sql ->rowCount() > 0) {
             return true;
         } else {
@@ -41,7 +66,7 @@ class Game{
     }
 
     public function estaNoJogo($jogo, $nome) {
-        $sql = "SELECT * FROM jogo WHERE jogo = :jogo AND player1 = :nome OR player2 = :nome";
+        $sql = "SELECT * FROM jogos WHERE jogo = :jogo AND player1 = :nome OR player2 = :nome";
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":jogo", $jogo);
         $sql->bindValue(":nome", $nome);
@@ -55,13 +80,13 @@ class Game{
     }
 
     public function nomePlayer1($jogo) {
-        $sql = "SELECT * FROM jogo WHERE jogo = :jogo";
+        $sql = "SELECT * FROM jogos WHERE jogo = :jogo";
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":jogo", $jogo);
         $sql->execute();
 
         if($sql ->rowCount() > 0) {
-            $sql = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $sql = $sql->fetch(PDO::FETCH_ASSOC);
             return $sql['player1'];
         } else {
             return false;
@@ -69,13 +94,13 @@ class Game{
     }
 
     public function nomePlayer2($jogo) {
-        $sql = "SELECT * FROM jogo WHERE jogo = :jogo";
+        $sql = "SELECT * FROM jogos WHERE jogo = :jogo";
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":jogo", $jogo);
         $sql->execute();
 
         if($sql ->rowCount() > 0) {
-            $sql = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $sql = $sql->fetch(PDO::FETCH_ASSOC);
             return $sql['player2'];
         } else {
             return false;

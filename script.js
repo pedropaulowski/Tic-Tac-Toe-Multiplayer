@@ -1,43 +1,51 @@
-function jogar(number) {  
-    if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
-        if(hasStarted() == false) {
-            let n = Math.floor(Math.random() * 2)
+function jogar(number) { 
+    var nome = document.getElementsByClassName('eu')[0].innerHTML
 
-            if(n == 0) {
-                var who = 'O'
-            } else {
-                var who = 'X'
-            }
+    if(myTurn(nome) == true && hasFinished() == false) { 
+        if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
+                if(hasStarted() == false) {
+                    let n = Math.floor(Math.random() * 2)
 
-        } else {
-            var who = document.getElementById('who').innerHTML
+                    if(n == 0) {
+                        var who = 'O'
+                    } else {
+                        var who = 'X'
+                    }
+
+                } else {
+                    var who = document.getElementById('who').innerHTML
+                }
+                
+                if(myTurn(nome) == true){
+                        
+                    var number = number
+                    var square = document.getElementById(number)
+                    square.innerHTML = who
+
+                    mudar()
+                }
+                
         }
-        var nome = document.getElementById('me').innerHTML
-        if(myTurn(nome) == true) {
-            var number = number
-            var square = document.getElementById(number)
-            square.innerHTML = who
+    
+        //AGORA O RESULTADO SAI NA MESMA JOGADA EM QUE ACABA
+        if(hasFinished() == true) {
+            if(document.getElementById('who').innerHTML == 'X')
+                document.getElementById('win').innerHTML = 'O WINS'
+            else
+                document.getElementById('win').innerHTML = 'X WINS'
+        } else if(hasFinished() == 'tie') {
+            document.getElementById('win').innerHTML = 'TIE'    
+        }
 
-            mudar()
-        }  
+        //SOMENTE SE FOR SELECIONADO MULTIPLAYER
+        let gameOver = hasFinished()? 'true': 'false'
+
+        playMultiplayer(gameOver, number)
+
+        setTimeout(waitingPlay, 200)
     }
-    //AGORA O RESULTADO SAI NA MESMA JOGADA EM QUE ACABA
-    if(hasFinished() == true) {
-        if(document.getElementById('who').innerHTML == 'X')
-            document.getElementById('win').innerHTML = 'O WINS'
-        else
-            document.getElementById('win').innerHTML = 'X WINS'
-    } else if(hasFinished() == 'tie') {
-        document.getElementById('win').innerHTML = 'TIE'    
-    }
 
-    //SOMENTE SE FOR SELECIONADO MULTIPLAYER
-    let gameOver = hasFinished()? 'true': 'false'
-
-    playMultiplayer(gameOver, number)
-
-    waitingPlay(number, gameOver)
-}
+}   
 
 function hasStarted() {
     var who = document.getElementById('who')
@@ -48,14 +56,14 @@ function hasStarted() {
 }
 
 function comecar() {
-    let n = Math.floor(Math.random() * 2)
-
-        if(n == 0)
-            var who = 'O'
-        else 
-            var who = 'X'
-
+    var nome = document.getElementsByClassName('eu')[0].innerHTML
+    var who = 'O'
     document.getElementById('who').innerHTML = who
+
+
+    if(myTurn(nome) != true) {
+        setTimeout(waitingPlay, 200)
+    }
 }
 
 function mudar() {
@@ -72,6 +80,7 @@ function mudar() {
 }
 
 function hasFinished() {
+    
     var um = document.getElementById('um').innerHTML
     var dois = document.getElementById('dois').innerHTML
     var tres = document.getElementById('tres').innerHTML
@@ -84,41 +93,56 @@ function hasFinished() {
     var oito = document.getElementById('oito').innerHTML
     var nove = document.getElementById('nove').innerHTML
 
-    if(um == dois && dois == tres && um != '') 
-        return true
-    else if(um == quatro && quatro == sete && um != '')
-        return true
-    else if(um == cinco && cinco == nove && um != '')
-        return true
-    else if(dois == cinco && cinco == oito && dois != '') 
-        return true
-    else if(tres == cinco && cinco == sete && tres != '') 
-        return true
-    else if(tres == seis && seis == nove && tres != '')
-        return true
-    else if(quatro == cinco && cinco == seis && quatro != '') 
-        return true
-    else if(sete == oito && oito == nove && sete != '')
-        return true
-    else if(um != '' && dois != '' && tres != '' && quatro != '' && cinco != '' && seis != '' && sete != '' && oito != '' && nove != '')
-        return 'tie'
-    else 
-        return false
+        if(um == dois && dois == tres && um != '') 
+            return true
+        else if(um == quatro && quatro == sete && um != '')
+            return true
+        else if(um == cinco && cinco == nove && um != '')
+            return true
+        else if(dois == cinco && cinco == oito && dois != '') 
+            return true
+        else if(tres == cinco && cinco == sete && tres != '') 
+            return true
+        else if(tres == seis && seis == nove && tres != '')
+            return true
+        else if(quatro == cinco && cinco == seis && quatro != '') 
+            return true
+        else if(sete == oito && oito == nove && sete != '')
+            return true
+        else if(um != '' && dois != '' && tres != '' && quatro != '' && cinco != '' && seis != '' && sete != '' && oito != '' && nove != '')
+            return 'tie'
+        else 
+            return false
 
+    
 
 }
 
-function colorir(number) {
-    var who = document.getElementById('who').innerHTML
-    var square = document.getElementById(number)
+function colorir(number, via) {
+    var via = via
+    var nome = document.getElementsByClassName('eu')[0].innerHTML
     
-    if(who == 'X' && square.innerHTML == ''){
-        square.style.backgroundColor = '#F25534'
-    } else if(square.innerHTML == ''){
-        square.style.backgroundColor = '#34BBF2'
+    if(myTurn(nome) == true) {
+        var who = document.getElementById('who').innerHTML
+        var square = document.getElementById(number)
+        
+        if(who == 'X' && square.innerHTML == ''){
+            square.style.backgroundColor = '#F25534'
+        } else if(square.innerHTML == ''){
+            square.style.backgroundColor = '#34BBF2'
 
+        }
+    } else if(via == 'viaResponse'){
+        var who = document.getElementById('who').innerHTML
+        var square = document.getElementById(number)
+        
+        if(who == 'X' && square.innerHTML == ''){
+            square.style.backgroundColor = '#F25534'
+        } else if(square.innerHTML == ''){
+            square.style.backgroundColor = '#34BBF2'
+
+        }
     }
-
 }
 
 function descolorir(number) {
@@ -131,6 +155,9 @@ function descolorir(number) {
 
 function playMultiplayer(gameOver, number) {
     var jogo = document.getElementById('jogo').innerHTML;
+    var player = document.getElementsByClassName('eu')[0].innerHTML
+
+
     axios({
         method: 'get',
         url: 'jogada.php',
@@ -138,7 +165,8 @@ function playMultiplayer(gameOver, number) {
             gameOver: gameOver,
             number: number,
             waiting: 'false',
-            jogo: jogo
+            jogo: jogo,
+            player: player
         }
     })
     .then(function (response) {
@@ -147,8 +175,8 @@ function playMultiplayer(gameOver, number) {
 
 }  
 
-function waitingPlay(number, gameOver) {
-    var jogo = document.getElementById('jogo').innerHTML;
+function waitingPlay() {
+    var jogo = document.getElementById('jogo').innerHTML
 
     axios({
         method: 'get',
@@ -160,8 +188,18 @@ function waitingPlay(number, gameOver) {
     })
     .then(function (response) {
         console.log(response)
-        console.log()
-    });
+        colorir(response.data.number, 'viaResponse')
+        document.getElementById(response.data.number).innerHTML = document.getElementById('who').innerHTML
+        mudar()
+        
+        if(response.data.gameOver == 'true'){
+            if(document.getElementById('who').innerHTML == 'X')
+                document.getElementById('win').innerHTML = 'O WINS'
+            else
+                document.getElementById('win').innerHTML = 'X WINS'
+        }
+
+    })
 
 }
 

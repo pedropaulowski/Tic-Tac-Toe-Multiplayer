@@ -4,7 +4,6 @@ session_start();
 require "jogo.class.php";
 $g = new Game();
 
-
 if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !empty($_GET['jogo'])){
     $nome = $_GET['nome'];
     $jogo = $_GET['jogo'];
@@ -15,13 +14,17 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
             $player2 = $g->nomePlayer2($jogo);
 
         } else {
-            header('Location: criarjogo.php');
+            echo "terceiro";
+           
+
         }
     } else {
-        header('Location: criarjogo.php');
+        echo "segundo";
+
     }
 } else {
-    header('Location: buscarjogo.php');
+    echo "PRIMEIRO";
+
 }
 ?>
 
@@ -31,18 +34,15 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
 </head>
 <body onload="comecar()">
     <div class="fluid">
-        <div id="<?php
+        <div id="player1" class="result <?php
             if($nome == $player1)
-                echo 'player1 me';
-            else 
-                echo 'player1';
-        ?>" class="result"><?php echo $player1;?></div>
-        <div id="<?php
+                echo 'eu';
+        ?>"><?php echo $player1;?></div>
+        <div id="jogo" class="result"><?php echo $jogo;?></div>
+        <div id="player2" class="result <?php
             if($nome == $player2)
-                echo 'player2 me';
-            else 
-                echo 'player2';
-        ?>" class="result"><?php echo $player2;?></div>
+                echo 'eu';
+        ?>"><?php echo $player2;?></div>
     </div>
     <div class="fluid">
         <div id="win" class="result"></div>
@@ -52,19 +52,19 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
     </div>
     <div class="fluid">
         <div class="container">
-            <div id="um" class="square" onmouseout="descolorir('um')" onmouseover="colorir('um')" onclick="jogar('um')"></div>
-            <div id="dois" class="square" onmouseout="descolorir('dois')" onmouseover="colorir('dois')" onclick="jogar('dois')"></div>
-            <div id="tres" class="square" onmouseout="descolorir('tres')" onmouseover="colorir('tres')" onclick="jogar('tres')"></div>
+            <div id="um" class="square" onmouseout="descolorir('um')" onmouseover="colorir('um', 0)" onclick="jogar('um')"></div>
+            <div id="dois" class="square" onmouseout="descolorir('dois')" onmouseover="colorir('dois', 0)" onclick="jogar('dois')"></div>
+            <div id="tres" class="square" onmouseout="descolorir('tres')" onmouseover="colorir('tres', 0)" onclick="jogar('tres')"></div>
         </div>
         <div class="container">
-            <div id="quatro" class="square" onmouseout="descolorir('quatro')" onmouseover="colorir('quatro')" onclick="jogar('quatro')"></div>
-            <div id="cinco" class="square" onmouseout="descolorir('cinco')" onmouseover="colorir('cinco')" onclick="jogar('cinco')"></div>
-            <div id="seis" class="square" onmouseout="descolorir('seis')" onmouseover="colorir('seis')" onclick="jogar('seis')"></div>
+            <div id="quatro" class="square" onmouseout="descolorir('quatro')" onmouseover="colorir('quatro', 0)" onclick="jogar('quatro')"></div>
+            <div id="cinco" class="square" onmouseout="descolorir('cinco')" onmouseover="colorir('cinco', 0)" onclick="jogar('cinco')"></div>
+            <div id="seis" class="square" onmouseout="descolorir('seis')" onmouseover="colorir('seis', 0)" onclick="jogar('seis')"></div>
         </div>
         <div class="container">
-            <div id="sete" class="square" onmouseout="descolorir('sete')" onmouseover="colorir('sete')" onclick="jogar('sete')"></div>
-            <div id="oito" class="square" onmouseout="descolorir('oito')" onmouseover="colorir('oito')" onclick="jogar('oito')"></div>
-            <div id="nove" class="square" onmouseout="descolorir('nove')" onmouseover="colorir('nove')" onclick="jogar('nove')"></div>
+            <div id="sete" class="square" onmouseout="descolorir('sete')" onmouseover="colorir('sete', 0)" onclick="jogar('sete')"></div>
+            <div id="oito" class="square" onmouseout="descolorir('oito')" onmouseover="colorir('oito', 0)" onclick="jogar('oito')"></div>
+            <div id="nove" class="square" onmouseout="descolorir('nove')" onmouseover="colorir('nove', 0)" onclick="jogar('nove')"></div>
         </div>
     </div>
 </body>

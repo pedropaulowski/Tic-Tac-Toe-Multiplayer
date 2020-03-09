@@ -1,41 +1,31 @@
 <?php
-session_start();
-
 require "jogo.class.php";
 $g = new Game();
 
-$jogo = $_GET['jogo'];
-if($_GET['waiting']== 'true'){
-    //$arr = array('gameOver' => false, 'number' => 'cinco');
-    set_time_limit(60);
-   // while(true) {
-        session_write_close();
-        if($_SESSION["$jogo"]['jogada'] != json_decode($_GET['jogada'], true)){
-            
-            $jogada = json_decode($_GET['jogada']);
-            $arr = array('get' => $jogada , 'session' => $_SESSION[$jogo]['jogada']);
-            echo'<pre>';
-            print_r($jogada).'<br>';
-            print_r($_SESSION[$jogo]['jogada']).'<br>';
-            session_write_close();
-            
-            //break;
-        } else {
-          //  sleep(2);
-        }
-   // }
+$hora = date('Y-m-d H:i:s');
 
-   print_r(json_decode($_GET['jogada'], true)).'<br>';
-   print_r($_SESSION[$jogo]['jogada']).'<br>';
+if($_GET['waiting']== 'true'){  
+    set_time_limit(60);
+    $jogo = $_GET['jogo'];
+    while(true) {
+        session_write_close();
+        $jogadaNova = $g->arrayNovaJogada($jogo, $hora);
+        if(count($jogadaNova) > 0){
+            echo json_encode($jogadaNova);
+            break;
+        } else {
+            sleep(2);
+        }
+   }
 
 
 }else {
-    unset($_SESSION[$jogo]['jogada']);
-    session_write_close();
-    session_start();
-    $arr = array('gameOver' => $_GET['gameOver'], 'number' => $_GET['number']);
-    $_SESSION[$jogo]['jogada'] = $arr;
-    $_POST['jogada'] = $arr;
+    $jogo = $_GET['jogo'];
+    $numero = $_GET['number'];
+    $player = $_GET['player'];
+    $gameOver = $_GET['gameOver'];
+
+    $g->novaJogada($jogo, $numero, $player, $gameOver);
+
 }
 
-//echo json_encode($arr);
