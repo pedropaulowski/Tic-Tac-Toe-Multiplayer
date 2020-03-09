@@ -3,7 +3,8 @@ margin: 0;
 padding: 0;
 }
 body{
- background-color: black;
+    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .container{
     border: 1px solid black;
@@ -14,7 +15,7 @@ body{
     font-size: 100px;
     line-height: 200px;
     text-align: center;
-    background-color: white;
+    background-color: black;
 
     
 }
@@ -36,16 +37,29 @@ body{
     font-size: 50px;
     line-height: 50px;
     text-align: center;
-    background-color: white;
+    background-color: black;
+    color:white;
     
 }
 .square{
-    border: 1px solid black;
+    border: 3px solid black;
     width: 200px;
     height: 200px;
     text-align: center;
     font-size: 200px;
     line-height: 200px;
     background-color: white;
+    border-radius: 15%;
+    color: white;
 
+}
+.who{
+    border: 3px solid black;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    font-size: 200px;
+    line-height: 200px;
+    background-color: #CEDE16;
+    border-radius: 15%;
 }

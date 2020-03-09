@@ -2,41 +2,41 @@
 
 
 
-function jogar(numero) {
-
-    
-    if(document.getElementById(numero).innerHTML == '' && hasFinished() == false) {  
+function jogar(number) {
+    if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
         if(hasStarted() == false) {
             let n = Math.floor(Math.random() * 2)
 
             if(n == 0)
-                var quem = 'O'
+                var who = 'O'
             else 
-                var quem = 'X'
+                var who = 'X'
 
         } else {
-            var quem = document.getElementById('quem').innerHTML
+            var who = document.getElementById('who').innerHTML
         }
 
-        var numero = numero
-        var quadrado = document.getElementById(numero)
-        quadrado.innerHTML = quem
+        var number = number
+        var square = document.getElementById(number)
+        square.innerHTML = who
 
         mudar()
+
         
     } else if(hasFinished() == true) {
-        if(document.getElementById('quem').innerHTML == 'X')
-            document.getElementById('vitoria').innerHTML = 'O WINS'
+        if(document.getElementById('who').innerHTML == 'X')
+            document.getElementById('win').innerHTML = 'O WINS'
         else
-            document.getElementById('vitoria').innerHTML = 'X WINS'
-    }
+            document.getElementById('win').innerHTML = 'X WINS'
+    } else if(hasFinished() == 'tie')
+        document.getElementById('win').innerHTML = 'TIE'    
 
     
 }
 
 function hasStarted() {
-    var quem = document.getElementById('quem')
-    if(quem.innerHTML == undefined)
+    var who = document.getElementById('who')
+    if(who.innerHTML == undefined)
         return false
     else 
         return true
@@ -46,23 +46,23 @@ function comecar() {
     let n = Math.floor(Math.random() * 2)
 
         if(n == 0)
-            var quem = 'O'
+            var who = 'O'
         else 
-            var quem = 'X'
+            var who = 'X'
 
-    document.getElementById('quem').innerHTML = quem
+    document.getElementById('who').innerHTML = who
 }
 
 function mudar() {
-    var quem = document.getElementById('quem')
+    var who = document.getElementById('who')
 
-    if(quem.innerHTML == 'O') {
-        quem.innerHTML = ''
-        quem.innerHTML = 'X'
+    if(who.innerHTML == 'O') {
+        who.innerHTML = ''
+        who.innerHTML = 'X'
 
     } else {
-        quem.innerHTML = ''
-        quem.innerHTML = 'O'
+        who.innerHTML = ''
+        who.innerHTML = 'O'
     }
 }
 
@@ -95,30 +95,30 @@ function hasFinished() {
         return true
     else if(sete == oito && oito == nove && sete != '')
         return true
+    else if(um != '' && dois != '' && tres != '' && quatro != '' && cinco != '' && seis != '' && sete != '' && oito != '' && nove != '')
+        return 'tie'
     else 
         return false
 
 
 }
 
-function colorir(numero) {
-    var quem = document.getElementById('quem').innerHTML
-    var quadrado = document.getElementById(numero)
+function colorir(number) {
+    var who = document.getElementById('who').innerHTML
+    var square = document.getElementById(number)
     
-    if(quem == 'X' && quadrado.innerHTML == ''){
-        quadrado.style.backgroundColor = '#F25534'
-    } else if(quadrado.innerHTML == ''){
-        quadrado.style.backgroundColor = '#34BBF2'
+    if(who == 'X' && square.innerHTML == ''){
+        square.style.backgroundColor = '#F25534'
+    } else if(square.innerHTML == ''){
+        square.style.backgroundColor = '#34BBF2'
 
     }
 
-        
-
 }
 
-function descolorir(numero) {
-    var quadrado = document.getElementById(numero)
+function descolorir(number) {
+    var square = document.getElementById(number)
     
-    if(quadrado.innerHTML == '')
-        quadrado.style.backgroundColor = 'white'
+    if(square.innerHTML == '')
+        square.style.backgroundColor = 'white'
 }
