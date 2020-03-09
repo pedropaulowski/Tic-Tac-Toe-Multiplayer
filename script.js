@@ -1,8 +1,5 @@
-
-
-
-
 function jogar(number) {
+    
     if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
         if(hasStarted() == false) {
             let n = Math.floor(Math.random() * 2)
@@ -20,18 +17,17 @@ function jogar(number) {
         var square = document.getElementById(number)
         square.innerHTML = who
 
-        mudar()
-
-        
-    } else if(hasFinished() == true) {
+        mudar()  
+    }
+    //AGORA O RESULTADO SAI NA MESMA JOGADA EM QUE ACABA
+    if(hasFinished() == true) {
         if(document.getElementById('who').innerHTML == 'X')
             document.getElementById('win').innerHTML = 'O WINS'
         else
             document.getElementById('win').innerHTML = 'X WINS'
-    } else if(hasFinished() == 'tie')
+    } else if(hasFinished() == 'tie') {
         document.getElementById('win').innerHTML = 'TIE'    
-
-    
+    }
 }
 
 function hasStarted() {
