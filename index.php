@@ -1,8 +1,49 @@
+<?php
+session_start();
+
+require "jogo.class.php";
+$g = new Game();
+
+
+if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !empty($_GET['jogo'])){
+    $nome = $_GET['nome'];
+    $jogo = $_GET['jogo'];
+
+    if($g->existeJogo($jogo) == true) {
+        if($g->estaNoJogo($jogo, $nome) == true) {
+            $player1 = $g->nomePlayer1($jogo);
+            $player2 = $g->nomePlayer2($jogo);
+
+        } else {
+            header('Location: criarjogo.php');
+        }
+    } else {
+        header('Location: criarjogo.php');
+    }
+} else {
+    header('Location: buscarjogo.php');
+}
+?>
+
 <html>
 <head>
     <link rel="stylesheet" href="geral.css" />
 </head>
 <body onload="comecar()">
+    <div class="fluid">
+        <div id="<?php
+            if($nome == $player1)
+                echo 'player1 me';
+            else 
+                echo 'player1';
+        ?>" class="result"><?php echo $player1;?></div>
+        <div id="<?php
+            if($nome == $player2)
+                echo 'player2 me';
+            else 
+                echo 'player2';
+        ?>" class="result"><?php echo $player2;?></div>
+    </div>
     <div class="fluid">
         <div id="win" class="result"></div>
     </div>
@@ -28,4 +69,8 @@
     </div>
 </body>
 <script type="text/javascript" src="script.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </html>
+<?php
+
+?>

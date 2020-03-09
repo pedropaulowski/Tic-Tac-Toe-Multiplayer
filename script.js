@@ -1,23 +1,25 @@
-function jogar(number) {
-    
+function jogar(number) {  
     if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
         if(hasStarted() == false) {
             let n = Math.floor(Math.random() * 2)
 
-            if(n == 0)
+            if(n == 0) {
                 var who = 'O'
-            else 
+            } else {
                 var who = 'X'
+            }
 
         } else {
             var who = document.getElementById('who').innerHTML
         }
+        var nome = document.getElementById('me').innerHTML
+        if(myTurn(nome) == true) {
+            var number = number
+            var square = document.getElementById(number)
+            square.innerHTML = who
 
-        var number = number
-        var square = document.getElementById(number)
-        square.innerHTML = who
-
-        mudar()  
+            mudar()
+        }  
     }
     //AGORA O RESULTADO SAI NA MESMA JOGADA EM QUE ACABA
     if(hasFinished() == true) {
@@ -28,6 +30,13 @@ function jogar(number) {
     } else if(hasFinished() == 'tie') {
         document.getElementById('win').innerHTML = 'TIE'    
     }
+
+    //SOMENTE SE FOR SELECIONADO MULTIPLAYER
+    let gameOver = hasFinished()? 'true': 'false'
+
+    playMultiplayer(gameOver, number)
+
+    waitingPlay(number, gameOver)
 }
 
 function hasStarted() {
@@ -117,4 +126,56 @@ function descolorir(number) {
     
     if(square.innerHTML == '')
         square.style.backgroundColor = 'white'
+}
+
+
+function playMultiplayer(gameOver, number) {
+    var jogo = document.getElementById('jogo').innerHTML;
+    axios({
+        method: 'get',
+        url: 'jogada.php',
+        params: {
+            gameOver: gameOver,
+            number: number,
+            waiting: 'false',
+            jogo: jogo
+        }
+    })
+    .then(function (response) {
+        console.log(response.data)
+    });
+
+}  
+
+function waitingPlay(number, gameOver) {
+    var jogo = document.getElementById('jogo').innerHTML;
+
+    axios({
+        method: 'get',
+        url: 'jogada.php',
+        params: {
+            waiting: 'true',
+            jogo: jogo,
+        }
+    })
+    .then(function (response) {
+        console.log(response)
+        console.log()
+    });
+
+}
+
+function myTurn(nome) {
+    var player1 = document.getElementById('player1').innerHTML
+    var player2 = document.getElementById('player2').innerHTML
+    var who = document.getElementById('who').innerHTML
+    
+    if(nome == player1 && who == 'O')
+        return true
+    else if(nome == player1 && who == 'X')
+        return false
+    else if(nome == player2 && who == 'O')
+        return false
+    else if(nome == player2 && who == 'X')
+        return true
 }
