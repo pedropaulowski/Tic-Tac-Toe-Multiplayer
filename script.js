@@ -42,7 +42,7 @@ function jogar(number) {
 
         playMultiplayer(gameOver, number)
 
-        setTimeout(waitingPlay, 200)
+        waitingPlay()
     }
 
 }   
@@ -62,7 +62,7 @@ function comecar() {
 
 
     if(myTurn(nome) != true) {
-        setTimeout(waitingPlay, 200)
+        waitingPlay()
     }
 }
 
