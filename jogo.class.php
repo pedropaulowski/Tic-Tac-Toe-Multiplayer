@@ -20,7 +20,7 @@ class Game{
         $sql->execute();
 
         $arr = array('hora' => $hora);
-        return json_encode($arr);
+        return $arr;
     }
 
     public function arrayNovaJogada($jogo, $hora) {
@@ -105,6 +105,32 @@ class Game{
         } else {
             return false;
         }
+    }
+
+    public function isGameOver($jogo) {
+        $sql = "SELECT * FROM jogos WHERE jogo = :jogo";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->execute();
+
+        if($sql ->rowCount() > 0) {
+            $sql = $sql->fetch(PDO::FETCH_ASSOC);
+            if($sql['gameOver'] == 'true')
+                return true;
+            else 
+                return false;
+        } else {
+            return false;
+        }
+    }
+
+    public function gameOver($jogo) {
+        $sql = "UPDATE jogos SET gameOver = 'true' WHERE jogo = :jogo";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->execute();
+
+        return true;
     }
 
 }

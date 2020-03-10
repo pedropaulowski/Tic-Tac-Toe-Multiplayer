@@ -8,29 +8,34 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
     $nome = $_GET['nome'];
     $jogo = $_GET['jogo'];
 
-    if($g->existeJogo($jogo) == true) {
-        if($g->estaNoJogo($jogo, $nome) == true) {
-            $player1 = $g->nomePlayer1($jogo);
-            $player2 = $g->nomePlayer2($jogo);
+    if($g->isGameOver($jogo) == false) {
+        if($g->existeJogo($jogo) == true) {
+            if($g->estaNoJogo($jogo, $nome) == true) {
+                $player1 = $g->nomePlayer1($jogo);
+                $player2 = $g->nomePlayer2($jogo);
 
+            } else {
+                header("Location: buscarjogo.php");
+            }
         } else {
-            echo "terceiro";
-           
+                header("Location: buscarjogo.php");
 
         }
     } else {
-        echo "segundo";
-
+        header("Location: criarjogo.php");
     }
+
 } else {
-    echo "PRIMEIRO";
+        header("Location: criarjogo.php");
 
 }
+
 ?>
 
 <html>
 <head>
     <link rel="stylesheet" href="geral.css" />
+    <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" />
 </head>
 <body onload="comecar()">
     <div class="fluid">

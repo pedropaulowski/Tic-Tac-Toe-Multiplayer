@@ -40,9 +40,9 @@ function jogar(number) {
         //SOMENTE SE FOR SELECIONADO MULTIPLAYER
         let gameOver = hasFinished()? 'true': 'false'
 
-        playMultiplayer(gameOver, number)
+        var hora = playMultiplayer(gameOver, number)
 
-        waitingPlay()
+        waitingPlay(hora)
     }
 
 }   
@@ -170,12 +170,12 @@ function playMultiplayer(gameOver, number) {
         }
     })
     .then(function (response) {
-        console.log(response.data)
+        return response.data.hora
     });
 
 }  
 
-function waitingPlay() {
+function waitingPlay(hora) {
     var jogo = document.getElementById('jogo').innerHTML
 
     axios({
@@ -184,6 +184,7 @@ function waitingPlay() {
         params: {
             waiting: 'true',
             jogo: jogo,
+            hora: hora
         }
     })
     .then(function (response) {
@@ -199,6 +200,10 @@ function waitingPlay() {
                 document.getElementById('win').innerHTML = 'X WINS'
         }
 
+    })
+
+    .catch(function (error) {
+        setTimeout(waitingPlay(hora), 200)    
     })
 
 }
