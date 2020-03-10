@@ -44,7 +44,6 @@ function jogar(number) {
         else if(hasFinished() == 'tie')
             var gameOver = 'tie'
 
-        console.log(gameOver)
         var hora = playMultiplayer(gameOver, number)
 
         waitingPlay(hora)
@@ -69,6 +68,8 @@ function comecar() {
     if(myTurn(nome) != true) {
         waitingPlay()
     }
+
+
 }
 
 function mudar() {
@@ -193,7 +194,7 @@ function waitingPlay(hora) {
         }
     })
     .then(function (response) {
-        console.log(response.data.gameOver)
+
         colorir(response.data.number, 'viaResponse')
         document.getElementById(response.data.number).innerHTML = document.getElementById('who').innerHTML
         mudar()

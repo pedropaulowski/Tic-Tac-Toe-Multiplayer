@@ -13,6 +13,9 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
             if($g->estaNoJogo($jogo, $nome) == true) {
                 $player1 = $g->nomePlayer1($jogo);
                 $player2 = $g->nomePlayer2($jogo);
+                
+
+
 
             } else {
                 header("Location: buscarjogo.php");
@@ -36,7 +39,11 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
 <head>
     <link rel="stylesheet" href="geral.css" />
 </head>
-<body onload="comecar()">
+<body onload="<?php
+    if($g->foiIniciado($jogo) == true)
+        echo 'carregarJogo()';
+    else 
+        echo 'comecar();'?>">
     <div class="fluid">
         <div id="player1" class="result <?php
             if($nome == $player1)
@@ -74,7 +81,5 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
 </body>
 <script type="text/javascript" src="script.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="load.js"></script>
 </html>
-<?php
-
-?>

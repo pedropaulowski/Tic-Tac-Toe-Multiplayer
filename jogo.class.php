@@ -133,4 +133,25 @@ class Game{
         return true;
     }
 
-}
+    public function carregarJogo($jogo) {
+        $sql = "SELECT * FROM jogadas WHERE jogo = :jogo";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function foiIniciado($jogo) {
+        $sql = "SELECT * FROM jogadas WHERE jogo = :jogo";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":jogo", $jogo);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}   
