@@ -29,7 +29,7 @@ if($_GET['waiting']== 'true'){
     $player = $_GET['player'];
     $gameOver = $_GET['gameOver'];
     
-    if($gameOver == 'true')
+    if($gameOver == 'true' || $gameOver == 'tie')
         $g->gameOver($jogo);
 
     echo json_encode($g->novaJogada($jogo, $numero, $player, $gameOver));

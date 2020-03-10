@@ -1,81 +1,40 @@
 <?php
-session_start();
-
 require "jogo.class.php";
 $g = new Game();
 
-if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !empty($_GET['jogo'])){
-    $nome = $_GET['nome'];
-    $jogo = $_GET['jogo'];
+if(isset($_GET['player1']) && isset($_GET['player2'])) {
+    $player1 = $_GET['player1'];
+    $player2 = $_GET['player2'];
 
-    if($g->isGameOver($jogo) == false) {
-        if($g->existeJogo($jogo) == true) {
-            if($g->estaNoJogo($jogo, $nome) == true) {
-                $player1 = $g->nomePlayer1($jogo);
-                $player2 = $g->nomePlayer2($jogo);
+    $jogo = $g->newGame($player1, $player2);
 
-            } else {
-                header("Location: buscarjogo.php");
-            }
-        } else {
-                header("Location: buscarjogo.php");
-
-        }
-    } else {
-        header("Location: criarjogo.php");
-    }
-
-} else {
-        header("Location: criarjogo.php");
+    header('Location: jogo.php?jogo='.$jogo.'&&nome='.$player1);
 
 }
-
 ?>
-
-<html>
 <head>
-    <link rel="stylesheet" href="geral.css" />
     <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" />
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body onload="comecar()">
-    <div class="fluid">
-        <div id="player1" class="result <?php
-            if($nome == $player1)
-                echo 'eu';
-        ?>"><?php echo $player1;?></div>
-        <div id="jogo" class="result"><?php echo $jogo;?></div>
-        <div id="player2" class="result <?php
-            if($nome == $player2)
-                echo 'eu';
-        ?>"><?php echo $player2;?></div>
-    </div>
-    <div class="fluid">
-        <div id="win" class="result"></div>
-    </div>
-    <div class="fluid">
-        <div id="who" class="square who"></div>
-    </div>
-    <div class="fluid">
-        <div class="container">
-            <div id="um" class="square" onmouseout="descolorir('um')" onmouseover="colorir('um', 0)" onclick="jogar('um')"></div>
-            <div id="dois" class="square" onmouseout="descolorir('dois')" onmouseover="colorir('dois', 0)" onclick="jogar('dois')"></div>
-            <div id="tres" class="square" onmouseout="descolorir('tres')" onmouseover="colorir('tres', 0)" onclick="jogar('tres')"></div>
+<body>
+    <div class="container">
+    <form method="GET">
+        <div class="form-group">
+            <label for="formGroupExampleInput">MEU NICK</label>
+            <input type="text" class="form-control" name="player1">
         </div>
-        <div class="container">
-            <div id="quatro" class="square" onmouseout="descolorir('quatro')" onmouseover="colorir('quatro', 0)" onclick="jogar('quatro')"></div>
-            <div id="cinco" class="square" onmouseout="descolorir('cinco')" onmouseover="colorir('cinco', 0)" onclick="jogar('cinco')"></div>
-            <div id="seis" class="square" onmouseout="descolorir('seis')" onmouseover="colorir('seis', 0)" onclick="jogar('seis')"></div>
+        <div class="form-group">
+            <label for="formGroupExampleInput2">NICK DO ADVERSARIO</label>
+            <input type="text" class="form-control" name="player2">
         </div>
-        <div class="container">
-            <div id="sete" class="square" onmouseout="descolorir('sete')" onmouseover="colorir('sete', 0)" onclick="jogar('sete')"></div>
-            <div id="oito" class="square" onmouseout="descolorir('oito')" onmouseover="colorir('oito', 0)" onclick="jogar('oito')"></div>
-            <div id="nove" class="square" onmouseout="descolorir('nove')" onmouseover="colorir('nove', 0)" onclick="jogar('nove')"></div>
+        <div class="form-group">
+            <input type="submit" class="form-control">
         </div>
+    </form>
+    <a href="buscarjogo.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">ENTRAR EM JOGO CRIADO</a>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
-<script type="text/javascript" src="script.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</html>
-<?php
-
-?>

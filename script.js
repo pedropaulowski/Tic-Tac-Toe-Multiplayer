@@ -36,10 +36,15 @@ function jogar(number) {
         } else if(hasFinished() == 'tie') {
             document.getElementById('win').innerHTML = 'TIE'    
         }
-
         //SOMENTE SE FOR SELECIONADO MULTIPLAYER
-        let gameOver = hasFinished()? 'true': 'false'
+        if(hasFinished() == true) 
+            var gameOver = 'true'
+        else if(hasFinished() == false)
+            var gameOver = 'false'
+        else if(hasFinished() == 'tie')
+            var gameOver = 'tie'
 
+        console.log(gameOver)
         var hora = playMultiplayer(gameOver, number)
 
         waitingPlay(hora)
@@ -154,7 +159,7 @@ function descolorir(number) {
 
 
 function playMultiplayer(gameOver, number) {
-    var jogo = document.getElementById('jogo').innerHTML;
+    var jogo = document.getElementById('jogo').innerHTML
     var player = document.getElementsByClassName('eu')[0].innerHTML
 
 
@@ -171,7 +176,7 @@ function playMultiplayer(gameOver, number) {
     })
     .then(function (response) {
         return response.data.hora
-    });
+    })
 
 }  
 
@@ -188,16 +193,17 @@ function waitingPlay(hora) {
         }
     })
     .then(function (response) {
-        console.log(response)
+        console.log(response.data.gameOver)
         colorir(response.data.number, 'viaResponse')
         document.getElementById(response.data.number).innerHTML = document.getElementById('who').innerHTML
         mudar()
-        
         if(response.data.gameOver == 'true'){
             if(document.getElementById('who').innerHTML == 'X')
                 document.getElementById('win').innerHTML = 'O WINS'
             else
                 document.getElementById('win').innerHTML = 'X WINS'
+        } else if(response.data.gameOver == 'tie') {
+            document.getElementById('win').innerHTML = 'TIE'    
         }
 
     })
