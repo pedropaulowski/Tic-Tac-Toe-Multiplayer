@@ -1,33 +1,102 @@
-function jogar(number) {
-    
-    if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
-        if(hasStarted() == false) {
-            let n = Math.floor(Math.random() * 2)
+const socket  = new WebSocket('ws://localhost:8080')
+var identificador = ''
+var myTurn = true
 
-            if(n == 0)
-                var who = 'O'
-            else 
-                var who = 'X'
+socket.onopen = function(e) {
+    console.log("CONECTADO")
+    console.log(e)
 
-        } else {
-            var who = document.getElementById('who').innerHTML
-        }
+}
 
-        var number = number
+socket.onmessage = function (e) {
+    var json = e.data
+    console.log(json)
+
+    if(Number.isInteger(parseInt(json)) == true) {
+        identificador = json
+        console.log(json)
+    } else {
+        var who = document.getElementById('who').innerHTML
+       // myTurn = true
+        json = JSON.parse(e.data)
+        var number = JSON.parse(json).number
+        var gameOver = JSON.parse(json).gameOver
+
         var square = document.getElementById(number)
         square.innerHTML = who
+        
+        if(who == 'X'){
+            square.style.backgroundColor = '#F25534'
+        } else {
+            square.style.backgroundColor = '#34BBF2'
+        }
+        myTurn = true
+        if(gameOver != 'FALSE'){
+            if(gameOver == 'O WINS') {
+                document.getElementById('win').innerHTML = 'O WINS'
+                myTurn = false
+            } else if (gameOver == 'X WINS') {
+                document.getElementById('win').innerHTML = 'X WINS'
+                myTurn = false
+            } else if(gameOver == 'TIE') {
+                document.getElementById('win').innerHTML = 'TIE' 
+                myTurn = false
+            }
 
-        mudar()  
+        } 
+        mudar()
     }
-    //AGORA O RESULTADO SAI NA MESMA JOGADA EM QUE ACABA
-    if(hasFinished() == true) {
-        if(document.getElementById('who').innerHTML == 'X')
-            document.getElementById('win').innerHTML = 'O WINS'
-        else
-            document.getElementById('win').innerHTML = 'X WINS'
-    } else if(hasFinished() == 'tie') {
-        document.getElementById('win').innerHTML = 'TIE'    
+}
+
+function jogar(number) {
+    if(myTurn == true && document.getElementById(number).innerHTML == '') {
+
+        myTurn = false
+
+        if(document.getElementById(number).innerHTML == '' && hasFinished() == false) {  
+            if(hasStarted() == false) {
+                let n = Math.floor(Math.random() * 2)
+
+                if(n == 0)
+                    var who = 'O'
+                else 
+                    var who = 'X'
+            } else {
+                var who = document.getElementById('who').innerHTML
+            }
+            var number = number
+            var square = document.getElementById(number)
+            square.innerHTML = who
+
+            mudar()  
+        }
+        
+        if(hasFinished() == true) {
+            if(document.getElementById('who').innerHTML == 'X') {
+                document.getElementById('win').innerHTML = 'O WINS'
+                var gameOver = 'O WINS'
+            } else {
+                document.getElementById('win').innerHTML = 'X WINS'
+                var gameOver = 'X WINS'
+            }
+        } else if(hasFinished() == 'tie') {
+            document.getElementById('win').innerHTML = 'TIE' 
+            var gameOver = 'TIE'
+
+        } else {
+            var gameOver = 'FALSE'
+        }
+
+        var jogada = '{'+
+            '"player": "'+identificador+'",'+
+            '"number": "'+number+'",'+
+            '"gameOver": "'+gameOver+'"'+
+        '}'
+
+        socket.send(JSON.stringify(jogada))
+
     }
+
 }
 
 function hasStarted() {
@@ -47,6 +116,8 @@ function comecar() {
             var who = 'X'
 
     document.getElementById('who').innerHTML = who
+
+    
 }
 
 function mudar() {
@@ -60,6 +131,8 @@ function mudar() {
         who.innerHTML = ''
         who.innerHTML = 'O'
     }
+
+    console.log(myTurn)
 }
 
 function hasFinished() {
@@ -100,14 +173,15 @@ function hasFinished() {
 }
 
 function colorir(number) {
-    var who = document.getElementById('who').innerHTML
-    var square = document.getElementById(number)
-    
-    if(who == 'X' && square.innerHTML == ''){
-        square.style.backgroundColor = '#F25534'
-    } else if(square.innerHTML == ''){
-        square.style.backgroundColor = '#34BBF2'
-
+    if(myTurn == true) {
+        var who = document.getElementById('who').innerHTML
+        var square = document.getElementById(number)
+        
+        if(who == 'X' && square.innerHTML == ''){
+            square.style.backgroundColor = '#F25534'
+        } else if(square.innerHTML == ''){
+            square.style.backgroundColor = '#34BBF2'
+        }
     }
 
 }
@@ -118,3 +192,5 @@ function descolorir(number) {
     if(square.innerHTML == '')
         square.style.backgroundColor = 'white'
 }
+
+
