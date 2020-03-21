@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require "jogo.class.php";
+require "classes/jogo.class.php";
 $g = new Game();
 
 if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !empty($_GET['jogo'])){
@@ -79,7 +79,7 @@ if(isset($_GET['nome']) && !empty($_GET['nome']) && isset($_GET['jogo']) && !emp
         </div>
     </div>
 </body>
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="./scripts/script.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="load.js"></script>
+<script type="text/javascript" src="./scripts/load.js"></script>
 </html>

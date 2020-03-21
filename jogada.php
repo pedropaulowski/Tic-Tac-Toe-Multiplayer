@@ -1,5 +1,5 @@
 <?php
-require "jogo.class.php";
+require "./classes/jogo.class.php";
 $g = new Game();
 
 if(isset($_GET['hora']))
@@ -17,7 +17,7 @@ if($_GET['waiting']== 'true'){
             echo json_encode($jogadaNova);
             break;
         } else {
-            sleep(2);
+            sleep(0.5);
         }
    }
 

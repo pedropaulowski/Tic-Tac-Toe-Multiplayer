@@ -1,21 +1,28 @@
 <?php
-require "jogo.class.php";
+
+session_start();
+
+require "classes/jogo.class.php";
 $g = new Game();
 
-if(isset($_GET['jogo']) && isset($_GET['nome'])) {
-    $jogo = $_GET['jogo'];
-    $nome = $_GET['nome'];
+if(isset($_SESSION['nick']) && !empty($_SESSION['nick'])) {
+    if(isset($_GET['jogo']) ) {
+        $jogo = $_GET['jogo'];
+        $nome = $_SESSION['nick'];
 
-    if($g->existeJogo($jogo) == true) {
-        if($g->estaNoJogo($jogo,$nome) == true) {
-            header('Location: jogo.php?jogo='.$jogo.'&&nome='.$nome);
+        if($g->existeJogo($jogo) == true) {
+            if($g->estaNoJogo($jogo,$nome) == true) {
+                header('Location: jogo.php?jogo='.$jogo.'&&nome='.$nome);
 
+            } else {
+                header('Location: index.php');
+            }
         } else {
             header('Location: index.php');
         }
-    } else {
-        header('Location: index.php');
     }
+} else {
+    header("Location: login.php");
 }
 ?>
 <head>
@@ -29,14 +36,11 @@ if(isset($_GET['jogo']) && isset($_GET['nome'])) {
 </head>
 <body>
 <div class="container">
+    <h6>Certifique de que seu adversário digitou seu nick corretamente</h6>
     <form method="GET">
         <div class="form-group">
             <label for="formGroupExampleInput">CODIGO DO JOGO</label>
             <input type="text" class="form-control" name="jogo">
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput2">SEU NICK</label>
-            <input type="text" class="form-control" name="nome">
         </div>
         <div class="form-group">
             <input type="submit" class="form-control" value="ENTRAR">

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require "jogo.class.php";
+require "./classes/jogo.class.php";
 $g = new Game();
 
 $jogo = $_GET['jogo'];
