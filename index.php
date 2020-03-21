@@ -13,8 +13,27 @@ if(isset($_GET['player1']) && isset($_GET['player2'])) {
 }
 ?>
 <head>
-    <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" />
     
+    <meta charset="utf-8"/>
+	<meta name="keywords" content="Jogo da velha, Jogo da velha multiplayer, Jogo da velha online">
+	<!--<meta http-equiv="content-language" content="pt-br">
+	<link rel="canonical" href="matematica.gq/index.html">
+	<meta name="description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta name="author" content="Pedro Paulo">
+	<title>Jogo da Velha</title>
+	<meta itemprop="name" content="Jogo da Velha">
+	<meta itemprop="description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta property="og:description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta property="og:title" content="Jogo da Velha">
+	<meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="game"/>
+    <meta property="og:site_name" content="Jogo da Velha"/>
+    <meta property="og:url" content="http://jogodavelha.ml/index.php"/>
+        TWITTER
+    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:title" content="Jogo da Velha">
+    <meta property="twitter:description" content="Jogo da velha online multiplayer, jogue agora"/>
+    <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" /> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
