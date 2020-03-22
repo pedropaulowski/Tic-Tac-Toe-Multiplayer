@@ -12,10 +12,32 @@ class Fila {
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":player1", $player1);
         $sql->execute();
+
+    }
+
+    public function cancelarFila($nick) {
+        $sql = "UPDATE fila SET stats = 'CANCELADA', hora = NOW() WHERE player1 = :nick AND player2 IS NULL ";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":nick", $nick);
+        $sql->execute();
+
+    }
+
+    public function filaFoiCancelada($nick, $hora) {
+        $sql = "SELECT * FROM fila WHERE player1 = :nick AND player2 IS NULL AND hora >= :hora AND stats = 'CANCELADA'";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindValue(":nick", $nick);
+        $sql->bindValue(":hora", $hora);
+        $sql->execute();
+
+        if($sql->rowCount() > 0)
+            return true;
+        else 
+            return false;
     }
 
     public function temJogadorEsperando() {
-        $sql = "SELECT * FROM fila WHERE player2 IS NULL LIMIT 1";
+        $sql = "SELECT * FROM fila WHERE stats IS NULL AND player2 IS NULL LIMIT 1";
         $sql = $this->pdo->prepare($sql);
         $sql->execute();
 
@@ -28,15 +50,15 @@ class Fila {
     }
 
     public function estaEsperando($nick) {
-        $sql = "SELECT * FROM fila WHERE player1 = :nick AND player2 IS NULL";
+        $sql = "SELECT * FROM fila WHERE player1 = :nick AND player2 IS NULL AND stats IS NULL";
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":nick", $nick);
         $sql->execute();
 
         if($sql->rowCount() > 0) {
-            return true;
+            return 'true';
         } else {
-            return false;
+            return 'false';
         }
     }
 
@@ -47,20 +69,10 @@ class Fila {
         $sql->bindValue(":player1", $player1);
         $sql->execute();
 
-        $this->deletarFila($player1, $player2);
-
         return true;
     }
 
-    private function deletarFila($player1, $player2) {
-        $sql = "DELETE FROM filas WHERE player1 = :player1 AND player2 = :player2";
-        $sql = $this->pdo->prepare($sql);
-        $sql->bindValue(":player2", $player2);
-        $sql->bindValue(":player1", $player1);
-        $sql->execute();
-        
-        return true;
-    }
+
 
     public function msgParaAdversario($nick, $jogo) {
         $sql = "INSERT INTO mensagem SET nick = :nick, msg = :msg,hora = NOW()";
@@ -71,15 +83,15 @@ class Fila {
     }
 
     public function arrayNovasMsgs($nick, $hora) {
-        $sql = "SELECT * FROM mensagem WHERE nick = :nick AND hora > :hora";
+        $sql = 'SELECT * FROM mensagem WHERE nick = :nick AND hora > :hora LIMIT 1';
         $sql = $this->pdo->prepare($sql);
         $sql->bindValue(":nick", $nick);
         $sql->bindValue(":hora", $hora);
         $sql->execute();
-
-        if($sql->rowCount() > 0)
+        
+        if($sql->rowCount() > 0) 
             return $sql->fetch(PDO::FETCH_ASSOC);
         else 
-            return false;
+            return array();
     }
 }

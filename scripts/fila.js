@@ -1,6 +1,5 @@
 $('#fila').click(function(e) {
     var nick = document.getElementById('nick').innerHTML
-    console.log(nick)
     e.preventDefault()
 
     esperarFila(nick)
@@ -12,7 +11,7 @@ function esperarFila(nick) {
         method: 'get',
         url: 'esperarfila.php',
         params: {
-            player : nick,
+            fila : nick,
         }
     })
     .then(function (response) {
@@ -28,3 +27,15 @@ function esperarFila(nick) {
         esperarFila(nick)
     })
 }
+
+$('#cancelar').click(function(e) {
+
+    e.preventDefault()
+
+    axios({
+        method: 'get',
+        url: 'sairdafila.php'
+
+    })
+
+})

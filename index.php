@@ -23,7 +23,7 @@ if(isset($_SESSION['nick']) && !empty($_SESSION['nick'])) {
     <meta charset="utf-8"/>
     <meta name="keywords" content="Jogo da velha, Jogo da velha multiplayer, Jogo da velha online">
     <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" />
-	<!--<meta http-equiv="content-language" content="pt-br">
+	<meta http-equiv="content-language" content="pt-br">
 	<link rel="canonical" href="matematica.gq/index.html">
 	<meta name="description" content="Jogo da velha online multiplayer, jogue agora">
 	<meta name="author" content="Pedro Paulo">
@@ -35,12 +35,11 @@ if(isset($_SESSION['nick']) && !empty($_SESSION['nick'])) {
 	<meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="game"/>
     <meta property="og:site_name" content="Jogo da Velha"/>
-    <meta property="og:url" content="http://jogodavelha.ml/index.php"/>
-        TWITTER
+    <meta property="og:url" content="http://jogodavelha.gq/index.php"/>
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:title" content="Jogo da Velha">
+    <meta property="fb:app_id" content="1045418415840390">
     <meta property="twitter:description" content="Jogo da velha online multiplayer, jogue agora"/>
-     -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
@@ -61,7 +60,8 @@ if(isset($_SESSION['nick']) && !empty($_SESSION['nick'])) {
         </div>
     </form>
     <a href="buscarjogo.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">ENTRAR EM JOGO CRIADO</a>
-    <a id="fila" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">RANQUEADA</a>
+    <a id="fila" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">FILA</a>
+    <a id="cancelar" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">SAIR DA FILA</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

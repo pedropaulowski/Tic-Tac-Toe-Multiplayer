@@ -38,10 +38,9 @@ if(isset($_POST['nick']) && isset($_POST['senha'])) {
             <input type="password" class="form-control" name="senha">
         </div>
         <div class="form-group">
-            <input type="submit" class="form-control" value="LOG IN">
+            <input type="submit" class="form-control" value="CADASTRE - SE">
         </div>
     </form>
-    <a href="cadastrar.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Cadastre-se</a>
     <p>Precisamos que você tenha uma sessão para conseguirmos diferenciar as chamadas de fila</p>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

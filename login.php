@@ -20,7 +20,28 @@ if(isset($_POST['nick']) && isset($_POST['senha'])) {
 }
 ?>
 <head>
+    <meta charset="utf-8"/>
+    <meta name="keywords" content="Jogo da velha, Jogo da velha multiplayer, Jogo da velha online">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no" />
+	<meta http-equiv="content-language" content="pt-br">
+	<link rel="canonical" href="matematica.gq/index.html">
+	<meta name="description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta name="author" content="Pedro Paulo">
+	<title>Jogo da Velha</title>
+	<meta itemprop="name" content="Jogo da Velha">
+	<meta itemprop="description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta property="og:description" content="Jogo da velha online multiplayer, jogue agora">
+	<meta property="og:title" content="Jogo da Velha">
+	<meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="game"/>
+    <meta property="og:site_name" content="Jogo da Velha"/>
+    <meta property="og:url" content="http://jogodavelha.gq/login.php"/>
+    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:title" content="Jogo da Velha">
+    <meta property="fb:app_id" content="1045418415840390">
+    <meta property="twitter:description" content="Jogo da velha online multiplayer, jogue agora"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
